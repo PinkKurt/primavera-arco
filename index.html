@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIMAVERA.arco // KG Enrichment Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active-tab { background-color: #1e3a8a !important; color: #ffffff !important; }
+        .page-content { display: none; }
+        .block { display: block; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+
+    <header class="bg-gray-800 p-4 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-mono text-blue-400 font-bold">KE4H // PRIMAVERA_PROJECT</h1>
+            <nav class="flex gap-2">
+                <button onclick="switchPage('home')" class="tab-btn px-4 py-2 rounded bg-gray-900">Home</button>
+                <button onclick="switchPage('triples')" class="tab-btn px-4 py-2 rounded bg-gray-900">Triples</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-8">
+        
+        <section id="page-home" class="page-content block space-y-4">
+            <h2 class="text-3xl font-bold">Project Abstract</h2>
+            <p>This project uses LLMs to enrich the ArCo Knowledge Graph for Botticelli's <em>Primavera</em> by mapping individual mythological components.</p>
+        </section>
+
+        <section id="page-triples" class="page-content space-y-4">
+            <h2 class="text-3xl font-bold">Enriched RDF Triples</h2>
+            <pre class="bg-black p-6 rounded-lg text-yellow-400 font-mono text-sm overflow-x-auto">
+@prefix ex:    &lt;http://example.org/primavera/&gt; .
+@prefix arco:  &lt;https://w3id.org/arco/ontology/arco/&gt; .
+@prefix core:  &lt;https://w3id.org/arco/ontology/core/&gt; .
+@prefix a-cd:  &lt;https://w3id.org/arco/ontology/context-description/&gt; .
+@prefix a-dd:  &lt;https://w3id.org/arco/ontology/denotative-description/&gt; .
+@prefix rdfs:  &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+
+ex:Primavera_Artwork a arco:HistoricOrArtisticProperty ;
+    core:hasPart ex:Node_Zephyrus .
+
+ex:Node_Zephyrus a a-cd:CulturalPropertyComponent ;
+    a-cd:hasSubject ex:Subject_Zephyrus ;
+    a-dd:technicalCharacteristicNote "Right side of the canvas." .
+
+ex:Subject_Zephyrus a a-cd:Subject ;
+    rdfs:label "Zephyrus" .
+            </pre>
+        </section>
+    </main>
+
+    <script>
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('block'));
+            document.getElementById('page-' + pageId).classList.add('block');
+        }
+    </script>
+</body>
+</html>
