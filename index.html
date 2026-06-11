@@ -3,438 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIMAVERA.arco // KG Enrichment & LLM Evaluation Report</title>
+    <title>Primavera ArCo Enrichment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .active-tab {
-            background-color: #1e3a8a !important;
-            color: #ffffff !important;
-            border-color: #3b82f6 !important;
-        }
+        .content-section { display: none; }
+        .active { display: block; }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans leading-relaxed">
+<body class="bg-gray-900 text-gray-100 min-h-screen">
 
-    <!-- Global Header & Menu -->
-    <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col xl:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
-                <h1 class="text-lg font-mono font-bold tracking-wider text-blue-400">UNIBO // KE4H_PROJECT_1</h1>
-            </div>
-            
-            <!-- Global Nav Menu -->
-            <nav class="flex flex-wrap gap-1 bg-gray-950 p-1 rounded-lg border border-gray-800 text-xs md:text-sm">
-                <button onclick="switchPage('home')" id="btn-home" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white active-tab">Home & Abstract</button>
-                <button onclick="switchPage('gap')" id="btn-gap" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white">Gap Identification</button>
-                <button onclick="switchPage('methodology')" id="btn-methodology" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white">General Methodology</button>
-                <button onclick="switchPage('sparql')" id="btn-sparql" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white">SPARQL Implementations</button>
-                <button onclick="switchPage('prompts')" id="btn-prompts" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white">LLM Prompting & Triples</button>
-                <button onclick="switchPage('evaluation')" id="btn-evaluation" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white">LLM Comparison</button>
-                <button onclick="switchPage('challenges')" id="btn-challenges" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white">Challenges & Conclusion</button>
-            </nav>
+    <nav class="bg-gray-800 p-4 border-b border-gray-700">
+        <div class="max-w-5xl mx-auto flex gap-4">
+            <button onclick="show('home')" class="px-4 py-2 bg-blue-600 rounded">Home</button>
+            <button onclick="show('methodology')" class="px-4 py-2 bg-gray-700 rounded">Methodology</button>
+            <button onclick="show('triples')" class="px-4 py-2 bg-gray-700 rounded">Full RDF Triples</button>
         </div>
-    </header>
+    </nav>
 
-    <main class="max-w-7xl mx-auto px-4 py-8">
-        
-        <!-- SECTION 1: HOME & ABSTRACT -->
-        <section id="page-home" class="page-content space-y-6 block">
-            <div class="bg-gradient-to-r from-blue-950 to-gray-800 p-8 rounded-xl border border-gray-700 shadow-xl">
-                <span class="text-xs font-mono tracking-widest text-blue-400 uppercase font-semibold">Alma Mater Studiorum – Università di Bologna</span>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-1 mb-4 tracking-tight">
-                    Project 1: Enriching Sandro Botticelli's <span class="italic text-blue-300">Primavera</span> within the ArCo Knowledge Graph
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-700/50 text-sm">
-                    <div>
-                        <h3 class="text-xs uppercase tracking-wider text-gray-400 font-mono font-bold mb-1">Project Abstract</h3>
-                        <p class="text-gray-300 leading-relaxed">
-                            This project explores the collaborative enrichment of cultural heritage metadata through the combined use of Knowledge Graphs (KGs) and Large Language Models (LLMs) within the ArCo framework. Focusing strictly on Sandro Botticelli's *Primavera* (c. 1482), we execute specialized SPARQL queries to audit data deficiencies in online digital registries. By leveraging zero-shot, few-shot, and chain-of-thought prompt engineering, we generate new validated semantic triples to model individual canvas components, bypassing narrative constraints to capture fine-grained spatial and situational realities.
-                        </p>
-                    </div>
-                    <div class="bg-gray-900/60 p-4 rounded-lg border border-gray-800 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-xs uppercase tracking-wider text-gray-400 font-mono font-bold mb-2">Project Team Members</h3>
-                            <ul class="space-y-1 font-mono text-xs text-blue-300">
-                                <li>• Participant A (Task Focus: SPARQL Query Optimization & Schema Auditing)</li>
-                                <li>• Participant B (Task Focus: Multi-Model Prompt Engineering & Triples Generation)</li>
-                                <li>• Participant C (Task Focus: Web Architecture & Markdown Integration)</li>
-                                <li>• Participant D (Task Focus: Performance Metrics & Human Evaluation Survey)</li>
-                            </ul>
-                        </div>
-                        <div class="text-[11px] text-gray-500 font-mono mt-4">
-                            Course Context: Knowledge Extraction for Humanities (KE4H)
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contextual Canvas Reference Element -->
-            <div class="bg-gray-950 p-2 rounded-xl border border-gray-800 overflow-hidden">
-                <div class="relative">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Botticelli-primavera.jpg" alt="Sandro Botticelli - Primavera" class="w-full h-auto object-cover rounded-lg opacity-90">
-                    <div class="absolute bottom-3 left-3 bg-gray-900/90 backdrop-blur-md px-3 py-1.5 rounded text-[11px] font-mono border border-gray-700 text-gray-300">
-                        Canvas Target: Uffizi Gallery, Florence | Linked via external authority <a href="http://www.wikidata.org/entity/Q175116" target="_blank" class="text-blue-400 underline">Wikidata:Q175116</a>
-                    </div>
-                </div>
-            </div>
+    <main class="max-w-5xl mx-auto p-8">
+        <section id="home" class="content-section active space-y-4">
+            <h1 class="text-4xl font-bold text-blue-400">Botticelli's Primavera Enrichment</h1>
+            <p>This project resolves the semantic gap in the ArCo Knowledge Graph by modeling the nine mythological characters of Botticelli's <em>Primavera</em> as discrete components.</p>
         </section>
 
-        <!-- SECTION 2: GAP IDENTIFICATION -->
-        <section id="page-gap" class="page-content space-y-6 hidden">
-            <h2 class="text-2xl font-bold font-mono text-blue-400">1. Semantic Gap Identification</h2>
-            <hr class="border-gray-800">
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4">
-                <p class="text-gray-300 text-sm">
-                    The institutional cultural registry records for Botticelli's <em>Primavera</em> within public endpoints model the painting exclusively as a single, monolithic entity (<span class="font-mono text-yellow-400 text-xs">arco:CulturalProperty</span>). Our audit reveals a clear **knowledge gap**: the nine independent mythological figures interacting across the canvas (Mercury, the Three Graces, Venus, Cupid, Flora, Chloris, and Zephyrus) completely lack individual semantic bounds, spatial localization properties, or unique identifiers.
-                </p>
-                <p class="text-gray-300 text-sm">
-                    Because individual compositional components (<span class="font-mono text-yellow-400 text-xs">arco-cd:CulturalPropertyComponent</span>) are unindexed, semantic search agents cannot query or compute relational pathways between the characters. Resolving this spatial and thematic data gap is the primary focus of this enrichment project.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                    <div class="p-4 bg-gray-950 rounded-lg border border-gray-800 text-xs">
-                        <span class="text-red-400 font-mono font-bold block mb-1">Compositional Blank Space</span>
-                        Individual actors possess no URI strings within the graph, preventing granular metadata retrieval.
-                    </div>
-                    <div class="p-4 bg-gray-950 rounded-lg border border-gray-800 text-xs">
-                        <span class="text-red-400 font-mono font-bold block mb-1">Spatial Overlap Failures</span>
-                        Intricate groupings (such as the interlocking fingers of the Three Graces) lack distinct spatial coordinate delimiters.
-                    </div>
-                    <div class="p-4 bg-gray-950 rounded-lg border border-gray-800 text-xs">
-                        <span class="text-red-400 font-mono font-bold block mb-1">Transformation Representation</span>
-                        The mythological sequence where Zephyrus transforms Chloris into Flora cannot be handled natively by a static data entry.
-                    </div>
-                </div>
-            </div>
+        <section id="methodology" class="content-section space-y-4">
+            <h2 class="text-3xl font-bold text-blue-400">Methodology</h2>
+            <p>We used the <strong>Context Description (a-cd)</strong> and <strong>Denotative Description (a-dd)</strong> ArCo modules to ensure semantic validity.</p>
         </section>
 
-        <!-- SECTION 3: GENERAL METHODOLOGY -->
-        <section id="page-methodology" class="page-content space-y-6 hidden">
-            <h2 class="text-2xl font-bold font-mono text-blue-400">2. General Methodology & Technical Stack</h2>
-            <hr class="border-gray-800">
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4">
-                <p class="text-gray-300 text-sm">
-                    To bridge the identified data gap without adding qualitative text descriptions, we executed a structured, data-driven workflow:
-                </p>
-                
-                <div class="space-y-3 font-sans text-sm text-gray-300 pl-4 border-l-2 border-blue-500">
-                    <div>
-                        <strong class="text-white block">Step 1: Ontology Module Analysis</strong>
-                        We explored the ArCo documentation, isolating the <span class="font-mono text-xs text-yellow-400">Denotative Description</span> module (for physical tracking and dimension metrics) and the <span class="font-mono text-xs text-yellow-400">Context Description</span> module (for subject and authorship attributions).
-                    </div>
-                    <div>
-                        <strong class="text-white block">Step 2: Baseline SPARQL Auditing</strong>
-                        We executed programmatic lookups targeting the public endpoint to catalog missing relationships and verify target literals.
-                    </div>
-                    <div>
-                        <strong class="text-white block">Step 3: Strict Prompt Engineering</strong>
-                        We deployed system rules, formatting inputs, and sequence constraints to force LLMs to output clean graph structures, eliminating standard conversational language.
-                    </div>
-                    <div>
-                        <strong class="text-white block">Step 4: Multi-Model Benchmarking</strong>
-                        We ran comparative generation tasks across different architectures to evaluate schema validation errors before applying the new triples.
-                    </div>
-                </div>
-
-                <div class="mt-6 pt-4 border-t border-gray-700">
-                    <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-gray-400 mb-2">Technical Ecosystem</h4>
-                    <div class="flex flex-wrap gap-2 text-xs font-mono">
-                        <span class="bg-gray-950 px-2.5 py-1 rounded border border-gray-800">ArCo SPARQL Endpoint</span>
-                        <span class="bg-gray-950 px-2.5 py-1 rounded border border-gray-800">Context Description (a-cd)</span>
-                        <span class="bg-gray-950 px-2.5 py-1 rounded border border-gray-800">Denotative Description (a-dd)</span>
-                        <span class="bg-gray-950 px-2.5 py-1 rounded border border-gray-800">GPT-4o (OpenAI)</span>
-                        <span class="bg-gray-950 px-2.5 py-1 rounded border border-gray-800">Claude 3.5 Sonnet (Anthropic)</span>
-                        <span class="bg-gray-950 px-2.5 py-1 rounded border border-gray-800">Llama 3 70B (Meta)</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 4: SPARQL IMPLEMENTATIONS -->
-        <section id="page-sparql" class="page-content space-y-6 hidden">
-            <h2 class="text-2xl font-bold font-mono text-blue-400">3. SPARQL Query Auditing Engine</h2>
-            <hr class="border-gray-800">
-            
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4">
-                <p class="text-gray-300 text-sm">
-                    To evaluate the knowledge base, we designed an audit query using all seven mandatory operational keywords: <span class="font-mono bg-black px-1 text-yellow-400 text-xs">OPTIONAL</span>, <span class="font-mono bg-black px-1 text-yellow-400 text-xs">DISTINCT</span>, <span class="font-mono bg-black px-1 text-yellow-400 text-xs">UNION</span>, <span class="font-mono bg-black px-1 text-yellow-400 text-xs">FILTER</span>, <span class="font-mono bg-black px-1 text-yellow-400 text-xs">REGEX</span>, <span class="font-mono bg-black px-1 text-yellow-400 text-xs">LIMIT</span>, and <span class="font-mono bg-black px-1 text-yellow-400 text-xs">ORDER BY</span>.
-                </p>
-
-                <div>
-                    <h3 class="text-xs uppercase font-mono tracking-wider text-gray-400 mb-2 font-bold">Mandatory Verification Query (Executed Against ArCo Network)</h3>
-                    <pre class="bg-gray-950 p-4 rounded-lg font-mono text-xs text-green-400 border border-gray-900 overflow-x-auto">
-PREFIX arco: &lt;https://w3id.org/arco/ontology/arco/&gt;
-PREFIX core: &lt;https://w3id.org/arco/ontology/core/&gt;
-PREFIX a-cd: &lt;https://w3id.org/arco/ontology/context-description/&gt;
-PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-
-SELECT DISTINCT ?culturalProperty ?label ?author ?subjectLabel
-WHERE {
-  {
-    ?culturalProperty a arco:HistoricOrArtisticProperty .
-    ?culturalProperty rdfs:label ?label .
-    FILTER(REGEX(?label, "Primavera", "i"))
-  }
-  UNION
-  {
-    ?culturalProperty a arco:CulturalProperty .
-    ?culturalProperty rdfs:label ?label .
-    FILTER(REGEX(?label, "Botticelli", "i"))
-  }
-  
-  OPTIONAL {
-    ?culturalProperty a-cd:hasAuthorshipAttribution ?authorRel .
-    ?authorRel a-cd:hasAuthor ?author .
-  }
-  
-  OPTIONAL {
-    ?culturalProperty a-cd:hasSubject ?subjectNode .
-    ?subjectNode rdfs:label ?subjectLabel .
-  }
-}
-ORDER BY DESC(?culturalProperty)
-LIMIT 50</pre>
-                </div>
-
-                <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 text-xs font-mono space-y-2">
-                    <div class="text-blue-400 font-bold">// Audit Ledger Output:</div>
-                    <div class="text-gray-400">• Returned Array: 1 Target Instance found (<span class="text-yellow-500">ex:Primavera_Uffizi</span>).</div>
-                    <div class="text-gray-400">• Structural Issue Confirmed: The <span class="text-red-400">a-cd:hasSubject</span> parameter maps exclusively to the broad concept literal "Mythological Allegory". The individual sub-components representing the nine characters are completely missing from the official graph.</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 5: LLM PROMPTING & TRIPLES -->
-        <section id="page-prompts" class="page-content space-y-6 hidden">
-            <h2 class="text-2xl font-bold font-mono text-blue-400">4. LLM Prompt Engineering & RDF Generation</h2>
-            <hr class="border-gray-800">
-            
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-6">
-                <p class="text-gray-300 text-sm">
-                    We targeted the data gap using three prompting techniques, instructing the models to bypass conversational commentary and output data-ready triples directly.
-                </p>
-
-                <!-- Prompt Techniques Layout -->
-                <div class="grid grid-cols-1 gap-4">
-                    <div class="space-y-1">
-                        <span class="bg-blue-950 text-blue-400 px-2 py-0.5 rounded text-xs font-mono border border-blue-900 font-bold">Technique 1: Zero-Shot System Constraints</span>
-                        <div class="bg-gray-950 p-3 rounded-lg border border-gray-900 font-mono text-xs text-gray-300">
-                            Isolate the core characters into independent component nodes. Strip out all aesthetic interpretations. Output only valid Turtle syntax using the ArCo framework.
-                        </div>
-                    </div>
-                    <div class="space-y-1">
-                        <span class="bg-blue-950 text-blue-400 px-2 py-0.5 rounded text-xs font-mono border border-blue-900 font-bold">Technique 2: Few-Shot Structural Alignment</span>
-                        <div class="bg-gray-950 p-3 rounded-lg border border-gray-900 font-mono text-xs text-gray-300">
-                            [Input] Canvas: Pallas | Component: Centaur -> [Output] ex:Artwork core:hasPart ex:Node_Centaur.<br>
-                            [Input] Canvas: Primavera | Component: Mercury -> [Output] ex:Primavera_Artwork core:hasPart ex:Node_Mercury.
-                        </div>
-                    </div>
-                    <div class="space-y-1">
-                        <span class="bg-blue-950 text-blue-400 px-2 py-0.5 rounded text-xs font-mono border border-blue-900 font-bold">Technique 3: Chain-of-Thought (CoT) Spatial Extraction</span>
-                        <div class="bg-gray-950 p-3 rounded-lg border border-gray-900 font-mono text-xs text-gray-300">
-                            1. Calculate boundary limits on a normalized 100x100 grid from right to left.<br>
-                            2. Establish separate URI nodes for overlapping actors. Map properties to ArCo documentation rules.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Generated Triples Output -->
-                <div class="pt-4 border-t border-gray-700">
-                    <h3 class="text-sm font-bold text-white font-mono mb-2">Reconciled Knowledge Graph Dataset (9 Strictly Compliant Component Entities)</h3>
-                    <pre class="bg-gray-950 p-4 rounded-lg font-mono text-xs text-yellow-400 border border-gray-900 overflow-x-auto">
+        <section id="triples" class="content-section space-y-4">
+            <h2 class="text-3xl font-bold text-blue-400">Full RDF Triples</h2>
+            <pre class="bg-black p-4 rounded text-yellow-400 font-mono text-xs overflow-x-auto">
 @prefix ex:    &lt;http://example.org/primavera/&gt; .
 @prefix arco:  &lt;https://w3id.org/arco/ontology/arco/&gt; .
 @prefix core:  &lt;https://w3id.org/arco/ontology/core/&gt; .
 @prefix a-cd:  &lt;https://w3id.org/arco/ontology/context-description/&gt; .
 @prefix a-dd:  &lt;https://w3id.org/arco/ontology/denotative-description/&gt; .
-@prefix rdfs:  &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-@prefix xsd:   &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
-# Master Structural Assembly Mapped via Core Modules
 ex:Primavera_Artwork a arco:HistoricOrArtisticProperty ;
-    rdfs:label "La Primavera di Botticelli"^^xsd:string ;
     core:hasPart ex:Node_Zephyrus, ex:Node_Chloris, ex:Node_Flora, 
-                  ex:Node_Venus, ex:Node_Cupid, ex:Node_Grace_Right, 
-                  ex:Node_Grace_Middle, ex:Node_Grace_Left, ex:Node_Mercury .
+                  ex:Node_Venus, ex:Node_Cupid, ex:Node_Grace_R, 
+                  ex:Node_Grace_M, ex:Node_Grace_L, ex:Node_Mercury .
 
-# --- RIGHT CANVAS ZONE CONFIGURATIONS ---
+# --- CHARACTER ENTITIES ---
 ex:Node_Zephyrus a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Zephyrus Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Zephyrus ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Far-Right boundary bounds [x:85, y:15, w:15, h:65]"^^xsd:string .
-ex:Subject_Zephyrus a a-cd:Subject ;
-    rdfs:label "Zephyrus (Mythological West Wind)"^^xsd:string .
+    a-cd:hasSubject ex:Subject_Zephyrus .
+ex:Subject_Zephyrus a a-cd:Subject ; rdfs:label "Zephyrus" .
 
 ex:Node_Chloris a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Chloris Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Chloris ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Mid-Right background section [x:72, y:25, w:14, h:60]"^^xsd:string .
-ex:Subject_Chloris a a-cd:Subject ;
-    rdfs:label "Chloris (Greek Nymph)"^^xsd:string .
+    a-cd:hasSubject ex:Subject_Chloris .
+ex:Subject_Chloris a a-cd:Subject ; rdfs:label "Chloris" .
 
 ex:Node_Flora a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Flora Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Flora ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Foreground right deck [x:60, y:20, w:15, h:68]"^^xsd:string .
-ex:Subject_Flora a a-cd:Subject ;
-    rdfs:label "Flora (Goddess of Spring)"^^xsd:string .
+    a-cd:hasSubject ex:Subject_Flora .
+ex:Subject_Flora a a-cd:Subject ; rdfs:label "Flora" .
 
-# --- CENTRAL CANVAS ZONE CONFIGURATIONS ---
 ex:Node_Venus a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Venus Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Venus ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Center centralized framing niche [x:44, y:22, w:16, h:66]"^^xsd:string .
-ex:Subject_Venus a a-cd:Subject ;
-    rdfs:label "Venus (Central Sovereign Deity)"^^xsd:string .
+    a-cd:hasSubject ex:Subject_Venus .
+ex:Subject_Venus a a-cd:Subject ; rdfs:label "Venus" .
 
 ex:Node_Cupid a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Cupid Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Cupid ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Top center floating area [x:46, y:2, w:10, h:18]"^^xsd:string .
-ex:Subject_Cupid a a-cd:Subject ;
-    rdfs:label "Cupid (Putto Archer Element)"^^xsd:string .
+    a-cd:hasSubject ex:Subject_Cupid .
+ex:Subject_Cupid a a-cd:Subject ; rdfs:label "Cupid" .
 
-# --- THREE GRACES CHOREOGRAPHY BOUNDS ---
-ex:Node_Grace_Right a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Grace Right Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Grace_Right ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Interlocked ring right edge [x:34, y:24, w:11, h:64]"^^xsd:string .
-ex:Subject_Grace_Right a a-cd:Subject ;
-    rdfs:label "Pulchritudo (The Grace of Beauty)"^^xsd:string .
+ex:Node_Grace_R a a-cd:CulturalPropertyComponent ;
+    a-cd:hasSubject ex:Subject_Grace_R .
+ex:Subject_Grace_R a a-cd:Subject ; rdfs:label "Pulchritudo" .
 
-ex:Node_Grace_Middle a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Grace Middle Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Grace_Middle ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Interlocked ring reverse center [x:25, y:24, w:11, h:64]"^^xsd:string .
-ex:Subject_Grace_Middle a a-cd:Subject ;
-    rdfs:label "Castitas (The Grace of Chastity)"^^xsd:string .
+ex:Node_Grace_M a a-cd:CulturalPropertyComponent ;
+    a-cd:hasSubject ex:Subject_Grace_M .
+ex:Subject_Grace_M a a-cd:Subject ; rdfs:label "Castitas" .
 
-ex:Node_Grace_Left a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Grace Left Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Grace_Left ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Interlocked ring left turn [x:16, y:22, w:12, h:66]"^^xsd:string .
-ex:Subject_Grace_Left a a-cd:Subject ;
-    rdfs:label "Voluptas (The Grace of Desire)"^^xsd:string .
+ex:Node_Grace_L a a-cd:CulturalPropertyComponent ;
+    a-cd:hasSubject ex:Subject_Grace_L .
+ex:Subject_Grace_L a a-cd:Subject ; rdfs:label "Voluptas" .
 
-# --- LEFT CANVAS ZONE CONFIGURATIONS ---
 ex:Node_Mercury a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Mercury Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Mercury ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Far-Left vertical margin perimeter [x:2, y:12, w:15, h:76]"^^xsd:string .
-ex:Subject_Mercury a a-cd:Subject ;
-    rdfs:label "Mercury (Guardian of the Grove)"^^xsd:string .</pre>
-                </div>
-            </div>
+    a-cd:hasSubject ex:Subject_Mercury .
+ex:Subject_Mercury a a-cd:Subject ; rdfs:label "Mercury" .
+            </pre>
         </section>
-
-        <!-- SECTION 6: LLM COMPARISON & EVALUATION -->
-        <section id="page-evaluation" class="page-content space-y-6 hidden">
-            <h2 class="text-2xl font-bold font-mono text-blue-400">5. Multi-Model Performance Benchmarking</h2>
-            <hr class="border-gray-800">
-            
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-4">
-                <p class="text-gray-300 text-sm">
-                    We evaluated performance across clear operational parameters to discover data tracking faults:
-                </p>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs font-mono text-gray-300">
-                        <thead class="bg-gray-950 text-gray-400 uppercase">
-                            <tr>
-                                <th class="p-3 border border-gray-700">Evaluation Dimension</th>
-                                <th class="p-3 border border-gray-700 text-blue-400">GPT-4o (OpenAI)</th>
-                                <th class="p-3 border border-gray-700 text-emerald-400">Claude 3.5 Sonnet (Anthropic)</th>
-                                <th class="p-3 border border-gray-700 text-purple-400">Llama 3 70B (Meta)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-700 bg-gray-900/40">
-                            <tr>
-                                <td class="p-3 font-bold bg-gray-950/40">Ontological Precision</td>
-                                <td class="p-3 text-emerald-400">96% - Flawless namespace and property alignment with the ArCo schema.</td>
-                                <td class="p-3 text-emerald-400">92% - Correct nesting logic; isolated literal string syntax variants.</td>
-                                <td class="p-3 text-amber-400">72% - Invented non-existent predicates outside the ArCo documentation framework.</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-bold bg-gray-950/40">Graph Integrity</td>
-                                <td class="p-3 text-gray-300">Maintained correct subject loops without data loss.</td>
-                                <td class="p-3 text-gray-300">Isolated overlapping canvas elements cleanly.</td>
-                                <td class="p-3 text-amber-400">Failed serialization tests due to unclosed string formatting brackets.</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-bold bg-gray-950/40">Conversational Control</td>
-                                <td class="p-3 text-emerald-400">Excellent - Generated pure graph code with zero introductory text.</td>
-                                <td class="p-3 text-emerald-400">Excellent - Suppressed conversational commentary entirely.</td>
-                                <td class="p-3 text-red-400">Failed - Appended long introductory paragraphs discussing Renaissance history.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 7: CHALLENGES & CONCLUSION -->
-        <section id="page-challenges" class="page-content space-y-6 hidden">
-            <h2 class="text-2xl font-bold font-mono text-blue-400">6. Technical Challenges, Mitigations & Conclusions</h2>
-            <hr class="border-gray-800">
-            
-            <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-6">
-                <div class="space-y-4">
-                    <h3 class="text-base font-bold text-white font-mono flex items-center gap-2">
-                        <span class="w-1.5 h-3 bg-red-500 inline-block"></span> Challenge 1: Spatial Merging Errors
-                    </h3>
-                    <p class="text-gray-300 text-sm pl-3.5">
-                        Characters like the Three Graces share highly integrated, overlapping visual space, making simple rectangular bounding boxes ineffective for data isolation.
-                        <span class="block mt-1 text-xs text-emerald-400 font-mono">Mitigation: Evaluated geometry boundaries were mapped inside structured text records under <span class="underline">a-dd:technicalCharacteristicNote</span> attributes to maintain localized reference strings without adding external schema clutter.</span>
-                    </p>
-                </div>
-
-                <div class="space-y-4 pt-4 border-t border-gray-700/50">
-                    <h3 class="text-base font-bold text-white font-mono flex items-center gap-2">
-                        <span class="w-1.5 h-3 bg-red-500 inline-block"></span> Challenge 2: Representing Sequential Metamorphosis
-                    </h3>
-                    <p class="text-gray-300 text-sm pl-3.5">
-                        Standard RDF structures model static assets efficiently but fail to natively handle active narrative transitions, such as Chloris transforming into Flora under Zephyrus's touch.
-                        <span class="block mt-1 text-xs text-emerald-400 font-mono">Mitigation: We extended our local schema tracking using situational wrappers (<span class="underline">core:Situation</span>), creating independent chronological states to accurately model the change.</span>
-                    </p>
-                </div>
-
-                <div class="space-y-4 pt-4 border-t border-gray-700/50">
-                    <h3 class="text-base font-bold text-white font-mono flex items-center gap-2">
-                        <span class="w-1.5 h-3 bg-blue-500 inline-block"></span> Project Strategic Conclusions
-                    </h3>
-                    <p class="text-gray-300 text-sm pl-3.5">
-                        By systematically filtering away conversational text, we successfully audited and enriched the semantic data model of Sandro Botticelli's masterpiece. This project demonstrates that combining automated SPARQL verification queries with structured LLM prompt flows can successfully modernize legacy cultural collections, transforming classical fine arts metadata into highly usable, machine-readable graphs.
-                    </p>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <!-- Script Routing Control -->
     <script>
-        function switchPage(pageId) {
-            document.querySelectorAll(".page-content").forEach(page => {
-                page.classList.add("hidden");
-                page.classList.remove("block");
-            });
-            
-            const targetPage = document.getElementById(`page-${pageId}`);
-            if (targetPage) {
-                targetPage.classList.remove("hidden");
-                targetPage.classList.add("block");
-            }
-            
-            document.querySelectorAll(".tab-btn").forEach(btn => {
-                btn.classList.remove("active-tab");
-            });
-            
-            const activeBtn = document.getElementById(`btn-${pageId}`);
-            if (activeBtn) {
-                activeBtn.classList.add("active-tab");
-            }
-            
-            window.scrollTo(0, 0);
+        function show(id) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
     </script>
 </body>
