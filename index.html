@@ -15,7 +15,6 @@
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans leading-relaxed">
 
-    <!-- Global Header & Menu -->
     <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col xl:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
@@ -23,7 +22,6 @@
                 <h1 class="text-lg font-mono font-bold tracking-wider text-blue-400">UNIBO // KE4H_PROJECT_1</h1>
             </div>
             
-            <!-- Global Nav Menu -->
             <nav class="flex flex-wrap gap-1 bg-gray-950 p-1 rounded-lg border border-gray-800 text-xs md:text-sm">
                 <button onclick="switchPage('home')" id="btn-home" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white active-tab">Home & Abstract</button>
                 <button onclick="switchPage('gap')" id="btn-gap" class="tab-btn px-3 py-1.5 rounded transition font-medium text-gray-400 hover:text-white">Gap Identification</button>
@@ -38,7 +36,6 @@
 
     <main class="max-w-7xl mx-auto px-4 py-8">
         
-        <!-- SECTION 1: HOME & ABSTRACT -->
         <section id="page-home" class="page-content space-y-6 block">
             <div class="bg-gradient-to-r from-blue-950 to-gray-800 p-8 rounded-xl border border-gray-700 shadow-xl">
                 <span class="text-xs font-mono tracking-widest text-blue-400 uppercase font-semibold">Alma Mater Studiorum – Università di Bologna</span>
@@ -69,7 +66,6 @@
                 </div>
             </div>
 
-            <!-- Contextual Canvas Reference Element -->
             <div class="bg-gray-950 p-2 rounded-xl border border-gray-800 overflow-hidden">
                 <div class="relative">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Botticelli-primavera.jpg" alt="Sandro Botticelli - Primavera" class="w-full h-auto object-cover rounded-lg opacity-90">
@@ -80,7 +76,6 @@
             </div>
         </section>
 
-        <!-- SECTION 2: GAP IDENTIFICATION -->
         <section id="page-gap" class="page-content space-y-6 hidden">
             <h2 class="text-2xl font-bold font-mono text-blue-400">1. Semantic Gap Identification</h2>
             <hr class="border-gray-800">
@@ -108,7 +103,6 @@
             </div>
         </section>
 
-        <!-- SECTION 3: GENERAL METHODOLOGY -->
         <section id="page-methodology" class="page-content space-y-6 hidden">
             <h2 class="text-2xl font-bold font-mono text-blue-400">2. General Methodology & Technical Stack</h2>
             <hr class="border-gray-800">
@@ -150,7 +144,6 @@
             </div>
         </section>
 
-        <!-- SECTION 4: SPARQL IMPLEMENTATIONS -->
         <section id="page-sparql" class="page-content space-y-6 hidden">
             <h2 class="text-2xl font-bold font-mono text-blue-400">3. SPARQL Query Auditing Engine</h2>
             <hr class="border-gray-800">
@@ -204,17 +197,23 @@ LIMIT 50</pre>
             </div>
         </section>
 
-        <!-- SECTION 5: LLM PROMPTING & TRIPLES -->
         <section id="page-prompts" class="page-content space-y-6 hidden">
             <h2 class="text-2xl font-bold font-mono text-blue-400">4. LLM Prompt Engineering & RDF Generation</h2>
             <hr class="border-gray-800">
             
             <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-6">
+                <div class="bg-blue-950/30 p-4 border-l-4 border-blue-500 rounded-r">
+                    <h4 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-1">Update Log: Refined Component Modeling</h4>
+                    <p class="text-xs text-gray-300">
+                        <strong>Change:</strong> Transitioned from broad conceptual subject nodes to <strong>9 discrete component entities</strong>. 
+                        This update forces the LLM to map every mythological figure as an independent instance of <span class="font-mono text-yellow-400">a-cd:CulturalPropertyComponent</span>.
+                    </p>
+                </div>
+
                 <p class="text-gray-300 text-sm">
                     We targeted the data gap using three prompting techniques, instructing the models to bypass conversational commentary and output data-ready triples directly.
                 </p>
 
-                <!-- Prompt Techniques Layout -->
                 <div class="grid grid-cols-1 gap-4">
                     <div class="space-y-1">
                         <span class="bg-blue-950 text-blue-400 px-2 py-0.5 rounded text-xs font-mono border border-blue-900 font-bold">Technique 1: Zero-Shot System Constraints</span>
@@ -238,96 +237,41 @@ LIMIT 50</pre>
                     </div>
                 </div>
 
-                <!-- Generated Triples Output -->
                 <div class="pt-4 border-t border-gray-700">
-                    <h3 class="text-sm font-bold text-white font-mono mb-2">Reconciled Knowledge Graph Dataset (9 Strictly Compliant Component Entities)</h3>
+                    <h3 class="text-sm font-bold text-white font-mono mb-2">Reconciled Knowledge Graph Dataset (9 Subject Components)</h3>
                     <pre class="bg-gray-950 p-4 rounded-lg font-mono text-xs text-yellow-400 border border-gray-900 overflow-x-auto">
 @prefix ex:    &lt;http://example.org/primavera/&gt; .
-@prefix arco:  &lt;https://w3id.org/arco/ontology/arco/&gt; .
-@prefix core:  &lt;https://w3id.org/arco/ontology/core/&gt; .
 @prefix a-cd:  &lt;https://w3id.org/arco/ontology/context-description/&gt; .
-@prefix a-dd:  &lt;https://w3id.org/arco/ontology/denotative-description/&gt; .
+@prefix core:  &lt;https://w3id.org/arco/ontology/core/&gt; .
 @prefix rdfs:  &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-@prefix xsd:   &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
-# Master Structural Assembly Mapped via Core Modules
-ex:Primavera_Artwork a arco:HistoricOrArtisticProperty ;
-    rdfs:label "La Primavera di Botticelli"^^xsd:string ;
-    core:hasPart ex:Node_Zephyrus, ex:Node_Chloris, ex:Node_Flora, 
-                  ex:Node_Venus, ex:Node_Cupid, ex:Node_Grace_Right, 
-                  ex:Node_Grace_Middle, ex:Node_Grace_Left, ex:Node_Mercury .
+# Relationship to Parent
+ex:Primavera_Artwork core:hasPart ex:Zephyrus, ex:Chloris, ex:Flora, ex:Venus, ex:Cupid, ex:Grace1, ex:Grace2, ex:Grace3, ex:Mercury .
 
-# --- RIGHT CANVAS ZONE CONFIGURATIONS ---
-ex:Node_Zephyrus a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Zephyrus Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Zephyrus ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Far-Right boundary bounds [x:85, y:15, w:15, h:65]"^^xsd:string .
-ex:Subject_Zephyrus a a-cd:Subject ;
-    rdfs:label "Zephyrus (Mythological West Wind)"^^xsd:string .
+# Character Components
+ex:Zephyrus a a-cd:CulturalPropertyComponent ; rdfs:label "Zephyrus" ; a-cd:hasSubject ex:Subj_Zephyrus .
+ex:Chloris  a a-cd:CulturalPropertyComponent ; rdfs:label "Chloris"  ; a-cd:hasSubject ex:Subj_Chloris .
+ex:Flora    a a-cd:CulturalPropertyComponent ; rdfs:label "Flora"    ; a-cd:hasSubject ex:Subj_Flora .
+ex:Venus    a a-cd:CulturalPropertyComponent ; rdfs:label "Venus"    ; a-cd:hasSubject ex:Subj_Venus .
+ex:Cupid    a a-cd:CulturalPropertyComponent ; rdfs:label "Cupid"    ; a-cd:hasSubject ex:Subj_Cupid .
+ex:Grace1   a a-cd:CulturalPropertyComponent ; rdfs:label "Aglaia"   ; a-cd:hasSubject ex:Subj_Grace .
+ex:Grace2   a a-cd:CulturalPropertyComponent ; rdfs:label "Euphrosyne" ; a-cd:hasSubject ex:Subj_Grace .
+ex:Grace3   a a-cd:CulturalPropertyComponent ; rdfs:label "Thalia"   ; a-cd:hasSubject ex:Subj_Grace .
+ex:Mercury  a a-cd:CulturalPropertyComponent ; rdfs:label "Mercury"  ; a-cd:hasSubject ex:Subj_Mercury .
 
-ex:Node_Chloris a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Chloris Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Chloris ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Mid-Right background section [x:72, y:25, w:14, h:60]"^^xsd:string .
-ex:Subject_Chloris a a-cd:Subject ;
-    rdfs:label "Chloris (Greek Nymph)"^^xsd:string .
-
-ex:Node_Flora a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Flora Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Flora ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Foreground right deck [x:60, y:20, w:15, h:68]"^^xsd:string .
-ex:Subject_Flora a a-cd:Subject ;
-    rdfs:label "Flora (Goddess of Spring)"^^xsd:string .
-
-# --- CENTRAL CANVAS ZONE CONFIGURATIONS ---
-ex:Node_Venus a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Venus Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Venus ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Center centralized framing niche [x:44, y:22, w:16, h:66]"^^xsd:string .
-ex:Subject_Venus a a-cd:Subject ;
-    rdfs:label "Venus (Central Sovereign Deity)"^^xsd:string .
-
-ex:Node_Cupid a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Cupid Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Cupid ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Top center floating area [x:46, y:2, w:10, h:18]"^^xsd:string .
-ex:Subject_Cupid a a-cd:Subject ;
-    rdfs:label "Cupid (Putto Archer Element)"^^xsd:string .
-
-# --- THREE GRACES CHOREOGRAPHY BOUNDS ---
-ex:Node_Grace_Right a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Grace Right Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Grace_Right ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Interlocked ring right edge [x:34, y:24, w:11, h:64]"^^xsd:string .
-ex:Subject_Grace_Right a a-cd:Subject ;
-    rdfs:label "Pulchritudo (The Grace of Beauty)"^^xsd:string .
-
-ex:Node_Grace_Middle a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Grace Middle Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Grace_Middle ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Interlocked ring reverse center [x:25, y:24, w:11, h:64]"^^xsd:string .
-ex:Subject_Grace_Middle a a-cd:Subject ;
-    rdfs:label "Castitas (The Grace of Chastity)"^^xsd:string .
-
-ex:Node_Grace_Left a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Grace Left Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Grace_Left ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Interlocked ring left turn [x:16, y:22, w:12, h:66]"^^xsd:string .
-ex:Subject_Grace_Left a a-cd:Subject ;
-    rdfs:label "Voluptas (The Grace of Desire)"^^xsd:string .
-
-# --- LEFT CANVAS ZONE CONFIGURATIONS ---
-ex:Node_Mercury a a-cd:CulturalPropertyComponent ;
-    rdfs:label "Mercury Component Node"^^xsd:string ;
-    a-cd:hasSubject ex:Subject_Mercury ;
-    a-dd:technicalCharacteristicNote "Canvas Grid Coordinate Zone: Far-Left vertical margin perimeter [x:2, y:12, w:15, h:76]"^^xsd:string .
-ex:Subject_Mercury a a-cd:Subject ;
-    rdfs:label "Mercury (Guardian of the Grove)"^^xsd:string .</pre>
+# Subject Nodes
+ex:Subj_Zephyrus a a-cd:Subject ; rdfs:label "God of the West Wind" .
+ex:Subj_Chloris  a a-cd:Subject ; rdfs:label "Nymph" .
+ex:Subj_Flora    a a-cd:Subject ; rdfs:label "Goddess of Spring" .
+ex:Subj_Venus    a a-cd:Subject ; rdfs:label "Goddess of Love" .
+ex:Subj_Cupid    a a-cd:Subject ; rdfs:label "God of Desire" .
+ex:Subj_Grace    a a-cd:Subject ; rdfs:label "One of the Three Graces" .
+ex:Subj_Mercury  a a-cd:Subject ; rdfs:label "Messenger of the Gods" .
+                    </pre>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 6: LLM COMPARISON & EVALUATION -->
         <section id="page-evaluation" class="page-content space-y-6 hidden">
             <h2 class="text-2xl font-bold font-mono text-blue-400">5. Multi-Model Performance Benchmarking</h2>
             <hr class="border-gray-800">
@@ -372,7 +316,6 @@ ex:Subject_Mercury a a-cd:Subject ;
             </div>
         </section>
 
-        <!-- SECTION 7: CHALLENGES & CONCLUSION -->
         <section id="page-challenges" class="page-content space-y-6 hidden">
             <h2 class="text-2xl font-bold font-mono text-blue-400">6. Technical Challenges, Mitigations & Conclusions</h2>
             <hr class="border-gray-800">
@@ -411,7 +354,6 @@ ex:Subject_Mercury a a-cd:Subject ;
 
     </main>
 
-    <!-- Script Routing Control -->
     <script>
         function switchPage(pageId) {
             document.querySelectorAll(".page-content").forEach(page => {
